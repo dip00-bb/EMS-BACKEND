@@ -1,13 +1,25 @@
 import User from "../Models/User.js"
+import bcrypt from 'bcrypt'
+export const loginService = async (email, password) => {
 
-export const loginService = async (email,password)=>{
-    console.log("Email passed")
-    const user=await User.findOne({email:email})
-    if(user){
-        console.log("User exist")
-    }else{
-        console.log("Not user ")
+    const user = await User.findOne({ email: email })
+
+    if (user) {
+        const passwordMatched = await bcrypt.compare(password, user.password)
+        if (passwordMatched) {
+            return {
+                validUser: true,
+                role:user.role
+            }
+        } else {
+            return {
+                validUser: false
+            }
+        }
+    } else {
+        return {
+            validUser:false
+        }
     }
-    return user
 
 }
