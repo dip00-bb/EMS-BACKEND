@@ -6,7 +6,6 @@ export const validator = (schema) => {
         try {
             const result = schema.safeParse(req.body);
             if (result.success) {
-                console.log("seice")
                 next()
             }else if (result.error instanceof z.ZodError) {
                 // console.log(result.error.issues[0].message)

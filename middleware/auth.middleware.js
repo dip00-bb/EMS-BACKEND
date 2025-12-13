@@ -23,7 +23,8 @@ export const verifyUser = async (req, res, next) => {
             res.status(401).json({ success: false, message: "Unauthorized Access" })
         }
 
-        
+        req.user = user
+        next()
 
     } catch (error) {
         res.status(500).json({ message: "Server Error" })

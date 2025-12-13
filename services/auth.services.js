@@ -9,10 +9,11 @@ export const loginService = async (email, password) => {
         if (passwordMatched) {
             return {
                 validUser: true,
-                role:user.role,
-                _id:user._id,
-                
+                role:user?.role,
+                _id:user?._id,
+                email:user?.email
             }
+
         } else {
             return {
                 validUser: false

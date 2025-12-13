@@ -1,4 +1,5 @@
 
+
 import { loginService } from "../services/auth.services.js";
 import jwt from 'jsonwebtoken'
 
@@ -10,16 +11,14 @@ export const loginController = async (req, res) => {
 
         if (chekvalidUser.validUser) {
             const token = jwt.sign({ email: email, role: chekvalidUser.role, _id: chekvalidUser._id }, process.env.JWT_SECRET_KEY)
-            console.log("generated token", token)
             await res.cookie("access_token", token, {
                 httpOnly: true,
                 maxAge: 1000 * 60 * 60 * 24 * 7,
                 path: '/',
                 sameSite: 'strict',
-                // secure: true
 
             })
-            res.status(200).json({ login: true, message: "Login Sucessful", user: { role: chekvalidUser.role, _id: chekvalidUser._id } })
+            res.status(200).json({ login: true, message: "Login Sucessful", user: { role: chekvalidUser.role, _id: chekvalidUser._id,email:chekvalidUser.email } })
 
         } else {
             res.status(401).json({ login: false, message: "Invalid User" })
@@ -31,3 +30,6 @@ export const loginController = async (req, res) => {
 
 }
 
+export const verifiedUser=(req,res)=>{
+    res.status(200).json({success:true,message:"Authorization Successfull"})
+}
