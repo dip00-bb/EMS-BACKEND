@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose";
-const departmentSchemea=mongoose.Schema({
+const departmentSchemea=new mongoose.Schema({
     departmentName:{type:String,required:true},
     depertmentDescription:{type:String,required:true}
 
