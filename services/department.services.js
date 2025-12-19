@@ -24,10 +24,13 @@ export const createNewDepartment = async (data) => {
 
 export const getDepartmentList = async () => {
     try {
+
         const data = await Department.find({})
+
         if (data) {
             return { success: true, data: data }
         }
+        
     } catch (error) {
         return {
             success: false

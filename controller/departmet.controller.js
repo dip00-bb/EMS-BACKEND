@@ -1,3 +1,4 @@
+import redis from "../config/redis.js"
 import { createNewDepartment, getDepartmentList } from "../services/department.services.js"
 
 
@@ -11,9 +12,29 @@ export const newDepartment = async (req, res) => {
 }
 
 export const getDepartment = async (req, res) => {
+    // hitted url will be the key 
+    const cachedKey = req.url
+
+    // try to get the cached data
+    const cachedData = await redis.get(cachedKey)
+
+    // if cached data exit return data from here
+    if (cachedData) {
+        const data = JSON.parse(cachedData)
+        res.status(200).json({ success: true, departmentList: data, message: "Data fetched successfully" })
+    }
+
+    // else query on the database
     const result = await getDepartmentList();
+
     if (result.success) {
-        res.status(200).json({ success: true, departmentList: result.data, message: "Data fetched successfully" })
+
+        // after getting the data save it in the cache
+        await redis.set(cachedKey, JSON.stringify(result.data))
+        await redis.expire(cachedKey, 10)
+
+        res.status(200).json({ success: true, departmentList: result.data, message: "Data fetched successfully"})
+
     } else {
         res.status(500).json({ success: false, departmentList: [], message: "Failed to fetch data" })
     }
