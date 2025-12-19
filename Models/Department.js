@@ -6,7 +6,7 @@ const departmentSchemea=new mongoose.Schema({
 
     // TODO 
     // Link with employee of that department
-})
+},{timestamps:true})
 
 const Department=mongoose.model("Department",departmentSchemea)
 

@@ -2,9 +2,10 @@ import express from 'express'
 import { newDepartment } from '../controller/departmet.controller.js'
 import { validator } from '../middleware/zod.validator.js'
 import { departmentSchema } from '../schema/department.schema.js'
+import { verifyUser } from '../middleware/auth.middleware.js'
 
 const router=express.Router()
 
-router.post('/add-depertment',validator(departmentSchema), newDepartment)
+router.post('/add-depertment', verifyUser, validator(departmentSchema), newDepartment)
 
 export default router

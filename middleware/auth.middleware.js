@@ -26,6 +26,7 @@ export const verifyUser = async (req, res, next) => {
         next()
 
     } catch (error) {
-        res.status(500).json({ message: "Server Error" })
+        console.log(error)
+        res.status(500).json({ success: false, message: "Server Error" })
     }
 }
