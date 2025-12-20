@@ -22,6 +22,8 @@ export const createNewDepartment = async (data) => {
     }
 }
 
+
+
 export const getDepartmentList = async () => {
     try {
 
@@ -30,7 +32,7 @@ export const getDepartmentList = async () => {
         if (data) {
             return { success: true, data: data }
         }
-        
+
     } catch (error) {
         return {
             success: false

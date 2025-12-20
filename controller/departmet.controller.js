@@ -21,7 +21,7 @@ export const getDepartment = async (req, res) => {
     // if cached data exit return data from here
     if (cachedData) {
         const data = JSON.parse(cachedData)
-        res.status(200).json({ success: true, departmentList: data, message: "Data fetched successfully" })
+        return res.status(200).json({ success: true, departmentList: data, message: "Data fetched successfully",from:"redis" })
     }
 
     // else query on the database
@@ -33,9 +33,9 @@ export const getDepartment = async (req, res) => {
         await redis.set(cachedKey, JSON.stringify(result.data))
         await redis.expire(cachedKey, 10)
 
-        res.status(200).json({ success: true, departmentList: result.data, message: "Data fetched successfully"})
+        return res.status(200).json({ success: true, departmentList: result.data, message: "Data fetched successfully",from:"query" })
 
     } else {
-        res.status(500).json({ success: false, departmentList: [], message: "Failed to fetch data" })
+        return res.status(500).json({ success: false, departmentList: [], message: "Failed to fetch data" })
     }
 }
