@@ -18,9 +18,10 @@ export const loginController = async (req, res) => {
         const { email, password } = req.body
 
         const result = await loginService(email, password);
-
+        console.log(result)
         if (result.validUser) {
-            await saveToken(res,result.token)
+            const x=await saveToken(res,result.token)
+            console.log(x)
             res.status(200).json({ login: true, message: "Login Sucessful", user: result.user })
 
         } else {
