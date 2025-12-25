@@ -22,8 +22,6 @@ export const createNewDepartment = async (data) => {
     }
 }
 
-
-
 export const getDepartmentList = async (req) => {
     const limit = parseInt(req.query.limit)
     const page = parseInt(req.query.page)
@@ -43,16 +41,30 @@ export const getDepartmentList = async (req) => {
             success: false
         }
     }
-} 
+}
 
-
-
-export const getDepartmentDetails=async(req)=>{
+export const getDepartmentDetails = async (req) => {
     try {
-        const depId=req.params.id;
-        const details=await Department.findById(depId);
-        return {success:true,details:details}
+        const depId = req.params.id;
+        const details = await Department.findById(depId);
+        return { success: true, details: details }
     } catch (error) {
-        return {success:false}
+        return { success: false }
+    }
+}
+
+
+
+export const updateDepartmentDetails = async (req) => {
+    try {
+        const depId = req.params.id;
+        const details = await Department.findByIdAndUpdate(depId,{
+            departmentName:req.body.departmentName,
+            departmentDescription:req.body.departmentDescription
+        });
+
+        return { success: true, details: details }
+    } catch (error) {
+        return { success: false }
     }
 }

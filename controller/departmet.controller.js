@@ -1,5 +1,5 @@
 import redis from "../config/redis.js"
-import { createNewDepartment, getDepartmentDetails, getDepartmentList } from "../services/department.services.js"
+import { createNewDepartment, getDepartmentDetails, getDepartmentList, updateDepartmentDetails } from "../services/department.services.js"
 
 
 export const newDepartment = async (req, res) => {
@@ -42,13 +42,22 @@ export const getDepartment = async (req, res) => {
     }
 }
 
-
 export const departmentDetails = async (req, res) => {
 
     const result = await getDepartmentDetails(req)
     if (result.success) {
-        res.status(200).json({ success: true, message: "Successful",departmentDetails:result.details})
+        res.status(200).json({ success: true, message: "Successful", departmentDetails: result.details })
     } else {
         res.status(500).json({ success: false, message: "Something went wrong" })
+    }
+}
+
+export const updateDetails = async (req, res) => {
+    const result = await updateDepartmentDetails(req);
+
+    if (result.success) {
+        res.status(200).json({ success: true, message: "Department Updated" })
+    } else {
+        res.status(500).json({ success: false, message: "Please try again" })
     }
 }
