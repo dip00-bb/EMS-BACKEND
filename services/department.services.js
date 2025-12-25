@@ -68,3 +68,15 @@ export const updateDepartmentDetails = async (req) => {
         return { success: false }
     }
 }
+
+
+export const deleteDepartment = async (req) => {
+    try {
+        const depId = req.params.id;
+        await Department.findByIdAndDelete(depId);
+        return { success: true}
+    } catch (error) {
+        console.log(error)
+        return { success: false }
+    }
+}
